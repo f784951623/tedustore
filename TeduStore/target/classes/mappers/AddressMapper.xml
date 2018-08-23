@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+	<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	<!-- namespace表示命名空间 ，值必须为接口的名称（包括包名）-->
+	<!-- 实现类没有，mybatis框架会生成接口的实现类 -->
+	<mapper namespace="cn.tedu.store.mapper.AddressMapper">
+		<!-- 透過Uid更新預設值為0 -->
+	<update id="updateByUid">
+		update t_address
+		set
+			isDefaul=0
+		where
+			uid=#{uid}
+	</update>
+		<!-- 透過Id更新預設值為1 -->
+	<update id="updateById">
+		update t_address
+		set
+			isDefaul=1
+		where
+			id=#{id}
+	</update>
+	
+		<!-- 插入收货人地址 -->
+		<!-- void insertAddress(Address address); -->
+		<insert id="insertAddress" 
+			parameterType="cn.tedu.store.bean.Address">
+		insert into t_address (
+			uid,recv_name,recv_province,recv_city,recv_area,
+			recv_district,recv_address,recv_phone,recv_tel,
+			recv_zip,recv_tag,isDefaul,
+			created_user,created_time,
+			modifed_user,modifed_time
+		)values(
+			#{uid},#{recvName},#{recvProvince},#{recvCity},
+			#{recvArea},#{recvDistrict},#{recvAddress},
+			#{recvPhone},#{recvTel},#{recvZip},#{recvTag},
+			#{isDefault},
+			#{createdUser},#{createdTime},
+			#{modifiedUser},#{modifiedTime}
+		)
+
+	</insert>
+	<!-- 查询用户的收货地址 -->
+	<!-- List<Address> selectByUid(Integer uid); -->
+	<select id="selectByUid" 
+				resultType="cn.tedu.store.bean.Address">	
+		select 
+			id,uid,recv_name recvName,
+			recv_province recvProvince,
+			recv_city recvCity,
+			recv_area recvArea,
+			recv_district recvDistrict,
+			recv_address recvAddress,
+			recv_phone recvPhone,
+			recv_tel recvTel,
+			recv_zip recvZip,
+			recv_tag recvTag,
+			isDefaul,
+			created_user createdUser,
+			created_time createdTime,
+			modifed_user modifiedUser,
+			modifed_time modifiedTime
+		from
+			t_address
+		where
+			uid = #{uid}
+	</select>
+	</mapper>

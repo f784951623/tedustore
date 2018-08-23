@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+	<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	<!-- namespace表示命名空间 ，值必须为接口的名称（包括包名）-->
+	<!-- 实现类没有，mybatis框架会生成接口的实现类 -->
+	<mapper namespace="cn.tedu.store.mapper.UserMapper">
+	<!-- 插入用戶信息 -->
+	<!-- void insertUser(User user) -->
+	<insert id="insertUser"
+	parameterType="cn.tedu.store.bean.User">
+		insert into t_user (
+			username,password,email,phone,
+			create_user,create_time,
+			modified_user,modified_time
+		)values(
+			#{username},#{password},#{email},
+			#{phone},#{createdUser},#{createdTime},
+			#{modifiedUser},#{modifiedTime}
+		)
+	
+	</insert>
+	<select id="selectByName"
+	resultType="cn.tedu.store.bean.User">
+		select 
+			id,username,password,email,phone,
+			create_user,create_time,
+			modified_user,modified_time  
+		from 
+			t_user
+		where
+			username=#{username}	
+	</select>
+	<!-- 通過email查詢 -->
+	<select id="selectByEmail" resultType="java.lang.Integer">
+		select 
+			count(*)
+		from 
+			t_user
+		where
+			email=#{email}
+	</select>
+	<!-- 通過電話查詢 -->
+	<select id="selectByPhone" resultType="java.lang.Integer">
+		select 
+			count(*)
+		from 
+			t_user
+		where
+			phone=#{phone}
+	</select>
+	<update id="updateUser"
+	parameterType="cn.tedu.store.bean.User">
+		update
+			t_user
+		<set>
+			<if test="password!=null">
+				password=#{password},
+			</if>
+			<if test="username!=null">
+				username=#{username},
+			</if>
+			<if test="gender!=null">
+				gender=#{gender},
+			</if>
+			<if test="phone!=null">
+				phone=#{phone},
+			</if>
+			<if test="email!=null">
+				email=#{email},
+			</if>
+			<if test="modifiedUser!=null">
+				modified_user=#{modifiedUser},
+			</if>
+			<if test="modifiedTime!=null">
+				modified_time=#{modifiedTime}
+			</if>
+		</set>
+			
+		where
+			id=#{id}
+	</update>
+	
+	<select id="selectById" resultType="cn.tedu.store.bean.User">
+		select 
+			id,username,password,email,phone,
+			create_user,create_time,
+			modified_user,modified_time  
+		from
+			t_user
+		where
+			id=#{id}
+	</select>
+</mapper>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
